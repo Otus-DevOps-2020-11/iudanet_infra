@@ -2,6 +2,44 @@
 
 iudanet Infra repository
 
+## HW-5
+
+* Установлен packer на локальную машину
+* Создан сервистный аккаунт и ключ для него
+
+```bash
+yc iam service-account create --name otus-auto --folder-id=$FOLDER_ID
+yc resource-manager folder add-access-binding --id=$FOLDER_ID --role=editor --service-account-id=$SA_ID
+yc iam key create --service-account-id=$SA_ID --output=/home/otus/yandex-cloud/otus-auto.key.json
+```
+
+* Создан темплейт для создания образа виртуальной машины через packer
+
+```bash
+cd packer
+# Настроим переменные
+mv variables.json.example variables.json
+# правка variables.json
+vim variables.json
+#Запуск сборки базового образа
+packer build -var-file variables.json ubuntu16.json
+
+#Запуск сборки образа с приложение
+packer build -var-file variables.json immutable.json
+```
+
+* Написан скрипт запуска виртуальной машины "запеченной" с приложением
+
+```bash
+./config-scripts/create-reddit-vm.sh
+```
+
+* поиск стандартный образов
+
+```bash
+yc compute image list --folder-id standard-images
+```
+
 ## HW-4
 
 ```txt
@@ -15,9 +53,9 @@ testapp_port=9292
 yc compute instance create \
   --name reddit-app \
   --hostname reddit-app \
-  --memory=4 \
+  --memory=2GB \
   --create-boot-disk image-folder-id=standard-images,image-family=ubuntu-1604-lts,size=10GB \
-  --network-interface subnet-name=default-ru-central1-a,nat-ip-version=ipv4 \
+  --network-interface subnet-name=otus-net-ru-central1-a,nat-ip-version=ipv4 \
   --metadata serial-port-enable=1 \
   --metadata-from-file user-data=metadata.yaml
 ```
