@@ -1,0 +1,13 @@
+[Unit]
+Description=Puma HTTP Server
+After=network.target
+
+[Service]
+Type=simple
+User=reddit
+WorkingDirectory=/opt/reddit/app
+ExecStart=/usr/bin/bundle exec puma -e production
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
