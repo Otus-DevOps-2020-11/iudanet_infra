@@ -17,6 +17,7 @@ iudanet Infra repository
 
 ```bash
 cd terraform
+terraform init
 terraform plan
 ```
 
