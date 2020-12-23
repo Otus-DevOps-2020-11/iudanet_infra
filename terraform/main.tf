@@ -15,7 +15,7 @@ resource "yandex_compute_instance" "app" {
   }
   zone = var.zone_app
   metadata = {
-    ssh-keys = "ubuntu:${file(var.public_key_path)}"
+    ssh-keys = "${var.ssh_user}:${file(var.public_key_path)}"
   }
   boot_disk {
     initialize_params {

@@ -34,3 +34,9 @@ variable count_app {
   type        = number
   default     = 1
 }
+
+variable "ssh_user" {
+  description = "ssh username"
+  default     = "ubunt"
+
+}
