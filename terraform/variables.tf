@@ -28,3 +28,9 @@ variable subnet_id {
 variable service_account_key_file {
   description = "key .json"
 }
+
+variable count_app {
+  description = "count app"
+  type        = number
+  default     = 1
+}
