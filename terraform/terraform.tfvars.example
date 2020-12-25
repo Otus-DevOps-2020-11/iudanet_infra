@@ -9,3 +9,5 @@ service_account_key_file = "key.json"
 private_key_path         = "~/.ssh/appuser"
 count_app                = 1
 ssh_user                 = "ubuntu"
+app_disk_image           = "9999999999"
+db_disk_image            = "9999999999"
