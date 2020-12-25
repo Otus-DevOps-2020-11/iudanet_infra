@@ -38,5 +38,14 @@ variable count_app {
 variable "ssh_user" {
   description = "ssh username"
   default     = "ubunt"
+}
 
+variable app_disk_image {
+  description = "Disk image for reddit app"
+  default = "reddit-app-base"
+}
+
+variable db_disk_image {
+  description = "Disk image for reddit db"
+  default = "reddit-db-base"
 }

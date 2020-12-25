@@ -16,7 +16,7 @@ platform_id               = "standard-v2"
   }
 
   network_interface {
-    subnet_id = yandex_vpc_subnet.app-subnet.id
+    subnet_id = var.subnet_id
     nat = true
   }
 
