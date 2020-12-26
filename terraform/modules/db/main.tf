@@ -1,6 +1,6 @@
 resource "yandex_compute_instance" "db" {
-  name = "reddit-db"
-  platform_id               = "standard-v2"
+  name        = "reddit-db"
+  platform_id = "standard-v2"
   labels = {
     tags = "reddit-db"
   }
@@ -18,10 +18,10 @@ resource "yandex_compute_instance" "db" {
 
   network_interface {
     subnet_id = var.subnet_id
-    nat = true
+    nat       = true
   }
 
   metadata = {
-  ssh-keys = "ubuntu:${file(var.public_key_path)}"
+    ssh-keys = "ubuntu:${file(var.public_key_path)}"
   }
 }
