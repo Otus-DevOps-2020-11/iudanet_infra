@@ -5,5 +5,4 @@ variables.json
 *.tfstate.backup
 *.tfvars
 .terraform/
-
 trash
