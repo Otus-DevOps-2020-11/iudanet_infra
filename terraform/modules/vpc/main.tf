@@ -1,12 +1,10 @@
-data "terraform_remote_state" "vpc" {
-  backend = "s3"
-  config = {
-    endpoint = "storage.yandexcloud.net"
-    bucket   = "otusdevops2020-tf-backend"
-    region   = "us-east-1"
-    key      = "1-terraform.tfstate"
+resource "yandex_vpc_network" "app-network" {
+  name = "reddit-app-network"
+}
 
-    skip_region_validation      = true
-    skip_credentials_validation = true
-  }
+resource "yandex_vpc_subnet" "app-subnet" {
+  name           = "reddit-app-subnet"
+  zone           = "ru-central1-a"
+  network_id     = "${yandex_vpc_network.app-network.id}"
+  v4_cidr_blocks = ["192.168.10.0/24"]
 }
