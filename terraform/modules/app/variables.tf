@@ -20,3 +20,6 @@ variable "run_provisioner" {
   description = "If true, run provisioner"
   type        = bool
 }
+variable "db_internal_host" {
+  description = "mongo db host"
+}

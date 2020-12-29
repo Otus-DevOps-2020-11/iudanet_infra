@@ -28,8 +28,8 @@ resource "yandex_compute_instance" "db" {
 }
 
 resource "null_resource" "app_provisioner" {
-  depends_on = [ yandex_compute_instance.db ]
-  count = var.run_provisioner ? 1 : 0
+  depends_on = [yandex_compute_instance.db]
+  count      = var.run_provisioner ? 1 : 0
 
   provisioner "remote-exec" {
     script = "${path.module}/files/install_mongodb.sh"

@@ -28,10 +28,12 @@ resource "yandex_compute_instance" "app" {
 
 
 resource "null_resource" "app_provisioner" {
-  depends_on = [ yandex_compute_instance.app ]
-  count = var.run_provisioner ? 1 : 0
+  depends_on = [yandex_compute_instance.app]
+  count      = var.run_provisioner ? 1 : 0
   provisioner "file" {
-    source      = "${path.module}/files/puma.service"
+    content = templatefile("${path.module}/files/puma.service", {
+      DATABASE_URL = "${var.db_internal_host}:27017"
+    })
     destination = "/tmp/puma.service"
   }
   provisioner "remote-exec" {
