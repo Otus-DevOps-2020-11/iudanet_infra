@@ -24,4 +24,16 @@ resource "yandex_compute_instance" "db" {
   metadata = {
     ssh-keys = "ubuntu:${file(var.public_key_path)}"
   }
+
+  provisioner "remote-exec" {
+    script = "${path.module}/files/install_mongodb.sh"
+  }
+  connection {
+    type  = "ssh"
+    host  = yandex_compute_instance.db.network_interface.0.nat_ip_address
+    user  = "ubuntu"
+    agent = false
+    # путь до приватного ключа
+    private_key = file(var.private_key_path)
+  }
 }

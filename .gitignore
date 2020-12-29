@@ -6,3 +6,4 @@ variables.json
 *.tfvars
 .terraform/
 trash
+run.sh

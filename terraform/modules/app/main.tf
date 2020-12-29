@@ -24,19 +24,19 @@ resource "yandex_compute_instance" "app" {
     ssh-keys = "ubuntu:${file(var.public_key_path)}"
   }
 
-  # provisioner "file" {
-  #   source      = "files/puma.service"
-  #   destination = "/tmp/puma.service"
-  # }
-  # provisioner "remote-exec" {
-  #   script = "files/deploy.sh"
-  # }
-  # connection {
-  #   type  = "ssh"
-  #   host  = self.network_interface.0.nat_ip_address
-  #   user  = "ubuntu"
-  #   agent = false
-  #   # путь до приватного ключа
-  #   private_key = file(var.private_key_path)
-  # }
+  provisioner "file" {
+    source      = "${path.module}/files/puma.service"
+    destination = "/tmp/puma.service"
+  }
+  provisioner "remote-exec" {
+    script = "${path.module}/files/deploy.sh"
+  }
+  connection {
+    type  = "ssh"
+    host  = yandex_compute_instance.app.network_interface.0.nat_ip_address
+    user  = "ubuntu"
+    agent = false
+    # путь до приватного ключа
+    private_key = file(var.private_key_path)
+  }
 }

@@ -11,3 +11,7 @@ variable db_disk_image {
 variable subnet_id {
   description = "Subnet"
 }
+
+variable private_key_path {
+  description = "Path to the private key used for ssh access"
+}
