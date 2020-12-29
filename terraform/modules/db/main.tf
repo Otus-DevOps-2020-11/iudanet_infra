@@ -25,9 +25,16 @@ resource "yandex_compute_instance" "db" {
     ssh-keys = "ubuntu:${file(var.public_key_path)}"
   }
 
+}
+
+resource "null_resource" "app_provisioner" {
+  depends_on = [ yandex_compute_instance.db ]
+  count = var.run_provisioner ? 1 : 0
+
   provisioner "remote-exec" {
     script = "${path.module}/files/install_mongodb.sh"
   }
+
   connection {
     type  = "ssh"
     host  = yandex_compute_instance.db.network_interface.0.nat_ip_address

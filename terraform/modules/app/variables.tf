@@ -15,3 +15,8 @@ variable subnet_id {
 variable private_key_path {
   description = "Path to the private key used for ssh access"
 }
+
+variable "run_provisioner" {
+  description = "If true, run provisioner"
+  type        = bool
+}

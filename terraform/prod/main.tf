@@ -11,6 +11,7 @@ module "app" {
   app_disk_image   = var.app_disk_image
   subnet_id        = var.subnet_id
   private_key_path = var.private_key_path
+  run_provisioner = var.run_provisioner
 
 }
 
@@ -20,6 +21,7 @@ module "db" {
   db_disk_image    = var.db_disk_image
   subnet_id        = var.subnet_id
   private_key_path = var.private_key_path
+  run_provisioner = var.run_provisioner
 
 }
 # resource "yandex_compute_instance" "app" {

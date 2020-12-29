@@ -24,6 +24,12 @@ resource "yandex_compute_instance" "app" {
     ssh-keys = "ubuntu:${file(var.public_key_path)}"
   }
 
+}
+
+
+resource "null_resource" "app_provisioner" {
+  depends_on = [ yandex_compute_instance.app ]
+  count = var.run_provisioner ? 1 : 0
   provisioner "file" {
     source      = "${path.module}/files/puma.service"
     destination = "/tmp/puma.service"

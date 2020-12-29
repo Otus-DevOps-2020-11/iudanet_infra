@@ -57,3 +57,8 @@ variable "static_access_key" {
 variable "static_secret_key" {
   description = "secret_key to s3"
 }
+
+variable "run_provisioner" {
+  description = "If true, run provisioner"
+  type        = bool
+}
