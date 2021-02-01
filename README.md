@@ -11,6 +11,8 @@ iudanet Infra repository
 Чтоизменилось и почему? Добавьте информацию в README.md.
 ```
 
+* Написан скрипт Dynamic Inventory
+
 ## HW-7
 
 * Создал модули terraform для app, db и vpc(не используется)

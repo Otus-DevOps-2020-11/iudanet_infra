@@ -2,7 +2,10 @@ resource "yandex_compute_instance" "db" {
   name        = "reddit-db"
   platform_id = "standard-v2"
   labels = {
-    tags = "reddit-db"
+    tags          = "reddit-db"
+    ansible_group = "db"
+    ansible_name  = "dbserver"
+
   }
 
   resources {

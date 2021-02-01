@@ -2,7 +2,10 @@ resource "yandex_compute_instance" "app" {
   name        = "reddit-app"
   platform_id = "standard-v2"
   labels = {
-    tags = "reddit-app"
+    tags          = "reddit-app"
+    ansible_group = "app"
+    ansible_name  = "appserver"
+
   }
   resources {
     cores  = 2

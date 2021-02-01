@@ -7,3 +7,4 @@ variables.json
 .terraform/
 trash
 run.sh
+.vscode
