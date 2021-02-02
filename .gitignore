@@ -7,3 +7,7 @@ variables.json
 .terraform/
 trash
 run.sh
+.vscode
+*.retry
+jdauphant.nginx
+vault.key
