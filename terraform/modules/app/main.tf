@@ -5,6 +5,8 @@ resource "yandex_compute_instance" "app" {
     tags          = "reddit-app"
     ansible_group = "app"
     ansible_name  = "appserver"
+    ansible_host_var_db_host = var.db_internal_host
+    ansible_group_var_username = "ubuntu"
 
   }
   resources {

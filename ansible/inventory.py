@@ -64,7 +64,42 @@ def get_list_host_to_group(group, json) -> list:
             host_list.append(host_name)
     return host_list
 
-def get_inventory_json(json) -> str:
+def get_vars_group(group, json) -> dict:
+    """
+    Принимает имя группы и json от  YC
+    возвращает dict с переменными которые находятся в метках lable
+    во всех хостах из группы с маской ansible_group_var_
+    """
+    ansible_var_template = 'ansible_group_var_'
+    group_vars = dict()
+    for host_data in json:
+        host_lables = host_data['labels']
+        group_name = host_data['labels']['ansible_group']
+        if group_name == group:
+            for key, value in host_lables.items():
+                if key.startswith(ansible_var_template):
+                    ansible_var_name = key.replace(ansible_var_template,'')
+                    group_vars[ansible_var_name] = value
+    return group_vars
+
+def get_vars_host(host, json) -> dict:
+    """
+    Возвращает 'dict' все переменные в тегах c название включающим себя значение ansible_var_template
+    по умолчанию 'ansible_host_var_'
+    """
+    ansible_var_template = 'ansible_host_var_'
+    host_vars = dict()
+    for host_data in json:
+        host_lables = host_data['labels']
+        host_name = host_data['labels']['ansible_name']
+        if host_name == host:
+            for key, value in host_lables.items():
+                if key.startswith(ansible_var_template):
+                    ansible_var_name = key.replace(ansible_var_template,'')
+                    host_vars[ansible_var_name] = value
+    return host_vars
+
+def get_inventory_json(json) -> dict:
     """
     Получает на вход json от yc
     Возвращает  json c inventry для ansible
@@ -81,9 +116,11 @@ def get_inventory_json(json) -> str:
     for host in get_name_list(json=json):
         inventory['_meta']['hostvars'][host] = {}
         inventory['_meta']['hostvars'][host]['ansible_host'] = get_ip_host(name=host, json=json)
+        inventory['_meta']['hostvars'][host].update(get_vars_host(host=host,json=json))
     for group in get_group_list(json):
         inventory[group] = {}
         inventory[group]['hosts'] = get_list_host_to_group( group=group, json=json)
+        inventory[group]['vars'] = get_vars_group(group=group, json=json)
     return inventory
 
 @click.command()
@@ -93,6 +130,7 @@ def main(list) -> str:
     json = get_yc_json()
     inventory = get_inventory_json(json=json)
     print(j.dumps(inventory, sort_keys=True, indent=4))
+    # get_vars_host(host="dbserver", json=json)
     sys.exit(0)
 
 if __name__== "__main__":

@@ -8,3 +8,4 @@ variables.json
 trash
 run.sh
 .vscode
+*.retry
