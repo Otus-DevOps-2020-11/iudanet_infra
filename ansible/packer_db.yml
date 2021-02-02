@@ -17,11 +17,11 @@
         update_cache: yes
 
     - name: add apt key
-      ansible.builtin.apt_key:
+      apt_key:
         url: https://www.mongodb.org/static/pgp/server-4.2.asc
 
     - name: add mongo repo
-      ansible.builtin.apt_repository:
+      apt_repository:
         repo: "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.2 multiverse"
         state: present
 

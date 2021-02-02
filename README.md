@@ -4,6 +4,81 @@ iudanet Infra repository
 
 ## HW-9
 
+* Созданы ansible плейбуки для деплой db  и app
+* модифицирован динамический инвентори. Переменные будертся из лейблов виртуальных машин.
+* сборка packer модифицированная под ansible
+
+```txt
+packer build -var-file=packer/variables.json packer/db.json
+packer build -var-file=packer/variables.json packer/app.json
+
+```
+
+* Для прохождения тестов добавлено
+  * ansible.cfg в корень со статическим инвентори
+  * конфиз packer тестируется от корня, пришлось добавить путь к ключу относительно корня в variables.json.example
+
+```txt
+  ✔  ansible: Run ansible validation
+     ✔  Command: `find ansible ! -name "inventory*.yml" -name "*.yml" -type f -print0 | xargs -0 -n1 ansible-playbook --syntax-check` stderr should not match /The error appears to have been/
+     ✔  Command: `find ansible ! -name "inventory*.yml" -name "*.yml" -type f -print0 | xargs -0 -n1 ansible-playbook --syntax-check` exit_status should eq 0
+  ✔  structure: Check repo structure
+     ✔  Directory ansible should exist
+     ✔  Directory ansible/files should exist
+     ✔  Directory ansible/templates should exist
+     ✔  File .gitignore should exist
+     ✔  File .gitignore content should match /\n\Z/
+     ✔  File README.md should exist
+     ✔  File README.md content should match /\n\Z/
+     ✔  File ansible/requirements.txt should exist
+     ✔  File ansible/requirements.txt content should match /\n\Z/
+     ✔  File ansible/ansible.cfg should exist
+     ✔  File ansible/ansible.cfg content should match /\n\Z/
+     ✔  File ansible/inventory should exist
+     ✔  File ansible/inventory content should match /\n\Z/
+     ✔  File ansible/inventory.yml should exist
+     ✔  File ansible/inventory.yml content should match /\n\Z/
+     ✔  File ansible/clone.yml should exist
+     ✔  File ansible/clone.yml content should match /\n\Z/
+     ✔  File ansible/packer_app.yml should exist
+     ✔  File ansible/packer_app.yml content should match /\n\Z/
+     ✔  File ansible/packer_db.yml should exist
+     ✔  File ansible/packer_db.yml content should match /\n\Z/
+     ✔  File ansible/reddit_app_multiple_plays.yml should exist
+     ✔  File ansible/reddit_app_multiple_plays.yml content should match /\n\Z/
+     ✔  File ansible/reddit_app_one_play.yml should exist
+     ✔  File ansible/reddit_app_one_play.yml content should match /\n\Z/
+     ✔  File ansible/site.yml should exist
+     ✔  File ansible/site.yml content should match /\n\Z/
+     ✔  File ansible/app.yml should exist
+     ✔  File ansible/app.yml content should match /\n\Z/
+     ✔  File ansible/db.yml should exist
+     ✔  File ansible/db.yml content should match /\n\Z/
+     ✔  File ansible/deploy.yml should exist
+     ✔  File ansible/deploy.yml content should match /\n\Z/
+  ✔  packer: Run packer validate
+     ✔  File packer/app.json should exist
+     ✔  File packer/app.json content should match /\n\Z/
+     ✔  File packer/db.json should exist
+     ✔  File packer/db.json content should match /\n\Z/
+     ✔  File packer/variables.json.example should exist
+     ✔  File packer/variables.json.example content should match /\n\Z/
+     ✔  File ansible/packer_app.yml should exist
+     ✔  File ansible/packer_app.yml content should match /\n\Z/
+     ✔  File ansible/packer_db.yml should exist
+     ✔  File ansible/packer_db.yml content should match /\n\Z/
+     ✔  Command: `packer validate -var-file=packer/variables.json.example packer/app.json` stdout should eq "Template validated successfully.\n"
+     ✔  Command: `packer validate -var-file=packer/variables.json.example packer/app.json` stderr should eq ""
+     ✔  Command: `packer validate -var-file=packer/variables.json.example packer/app.json` exit_status should eq 0
+     ✔  Command: `packer validate -var-file=packer/variables.json.example packer/db.json` stdout should eq "Template validated successfully.\n"
+     ✔  Command: `packer validate -var-file=packer/variables.json.example packer/db.json` stderr should eq ""
+     ✔  Command: `packer validate -var-file=packer/variables.json.example packer/db.json` exit_status should eq 0
+
+
+Profile Summary: 3 successful controls, 0 control failures, 0 controls skipped
+Test Summary: 51 successful, 0 failures, 0 skipped
+```
+
 ## HW-8
 
 * После выполнения команды удаления папки, запуск плейбука будет в статусе `change` так как Ansible создал папку и склонировал в нее репозиторий.
