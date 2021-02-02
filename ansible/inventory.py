@@ -64,6 +64,7 @@ def get_list_host_to_group(group, json) -> list:
             host_list.append(host_name)
     return host_list
 
+
 def get_vars_group(group, json) -> dict:
     """
     Принимает имя группы и json от  YC
@@ -121,6 +122,7 @@ def get_inventory_json(json) -> dict:
         inventory[group] = {}
         inventory[group]['hosts'] = get_list_host_to_group( group=group, json=json)
         inventory[group]['vars'] = get_vars_group(group=group, json=json)
+
     return inventory
 
 @click.command()
@@ -131,6 +133,7 @@ def main(list) -> str:
     inventory = get_inventory_json(json=json)
     print(j.dumps(inventory, sort_keys=True, indent=4))
     # get_vars_host(host="dbserver", json=json)
+
     sys.exit(0)
 
 if __name__== "__main__":

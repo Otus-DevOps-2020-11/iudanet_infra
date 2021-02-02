@@ -79,6 +79,7 @@ Profile Summary: 3 successful controls, 0 control failures, 0 controls skipped
 Test Summary: 51 successful, 0 failures, 0 skipped
 ```
 
+
 ## HW-8
 
 * После выполнения команды удаления папки, запуск плейбука будет в статусе `change` так как Ansible создал папку и склонировал в нее репозиторий.
