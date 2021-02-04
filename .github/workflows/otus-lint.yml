@@ -10,8 +10,8 @@ on:
 
 jobs:
   otus-homeworks:
-  lint-packer:
     runs-on: ubuntu-latest
+    container: express42/otus-homeworks:0.7.1
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
