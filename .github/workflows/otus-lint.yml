@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - test-ci
+      - ansible-3
   pull_request:
     branches:
       - master
