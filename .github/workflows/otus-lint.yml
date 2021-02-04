@@ -19,12 +19,12 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: express42/otus-homeworks
-          path: /tmp/otus-homeworks
+          path: otus-homeworks
           ref: 2020-11
       - name: run otus test
-        run: pwd && ls -lah  && ls -lah /tmp/otus-homeworks && env | grep REF && echo ${GITHUB_REF##*/} && cd $GITHUB_WORKSPACE
+        run: pwd && ls -lah  && ls -lah ./otus-homeworks && env | grep REF && echo ${GITHUB_REF##*/} && cd $GITHUB_WORKSPACE
       - name: run test otus
-        run: cd  $GITHUB_WORKSPACE && /tmp/otus-homeworks/homeworks/${GITHUB_REF##*/}/run.sh
+        run: cd  $GITHUB_WORKSPACE && ./otus-homeworks/homeworks/${GITHUB_REF##*/}/run.sh
 
   lint-packer:
     runs-on: ubuntu-latest
