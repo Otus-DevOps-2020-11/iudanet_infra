@@ -15,10 +15,15 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+      - name: Checkout private tools
+        uses: actions/checkout@v2
+        with:
+          repository: express42/otus-homeworks
+          path: /tmp/otus-homeworks
       - name: run otus test
-        run: pwd && ls -lah && env | grep REF && echo ${GITHUB_REF##*/} && cd $GITHUB_WORKSPACE
+        run: pwd && ls -lah  && ls -lah /tmp/otus-homeworks && env | grep REF && echo ${GITHUB_REF##*/} && cd $GITHUB_WORKSPACE
       - name: run test otus
-        run: cd  $GITHUB_WORKSPACE && /srv/otus-homeworks/homeworks/${GITHUB_REF##*/}/run.sh
+        run: cd  $GITHUB_WORKSPACE && /tmp/otus-homeworks/homeworks/${GITHUB_REF##*/}/run.sh
 
   lint-packer:
     runs-on: ubuntu-latest
