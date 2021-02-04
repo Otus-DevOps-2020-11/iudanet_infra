@@ -3,12 +3,25 @@ on:
   push:
     branches:
       - master
-      - ansible-3
+      - test-ci
   pull_request:
     branches:
       - master
 
 jobs:
+  otus-homeworks:
+  lint-packer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+        path: '/srv'
+      - name: run otus test
+        run: pwd && ls -lah && env | grep REF && echo ${GITHUB_REF##*/} && cd $GITHUB_WORKSPACE
+      - name: run test otus
+        run: cd  $GITHUB_WORKSPACE && ./otus-homeworks/homeworks/${GITHUB_REF##*/}/run.sh
+
+
   lint-packer:
     runs-on: ubuntu-latest
     container: express42/otus-homeworks:0.7.1
