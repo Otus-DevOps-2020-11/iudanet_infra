@@ -1,6 +1,8 @@
 # iudanet_infra
 
-![github actions linter](https://github.com/Otus-DevOps-2020-11/iudanet_infra/workflows/linter/badge.svg)
+![github actions linter](https://github.com/Otus-DevOps-2020-11/iudanet_infra/workflows/linter-pr/badge.svg)
+![github actions linter](https://github.com/Otus-DevOps-2020-11/iudanet_infra/workflows/linter-push/badge.svg)
+
 
 ## iudanet Infra repository
 
@@ -21,7 +23,8 @@
 
 * Добавлен бейдж статуса линтера
 
-  ![github actions linter](https://github.com/Otus-DevOps-2020-11/iudanet_infra/workflows/linter/badge.svg)
+![github actions linter](https://github.com/Otus-DevOps-2020-11/iudanet_infra/workflows/linter-pr/badge.svg)
+![github actions linter](https://github.com/Otus-DevOps-2020-11/iudanet_infra/workflows/linter-push/badge.svg)
 
 ### Тесты
 

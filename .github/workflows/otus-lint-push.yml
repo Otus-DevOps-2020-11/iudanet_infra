@@ -1,4 +1,4 @@
-name: linter
+name: linter-push
 on:
   push:
     branches:
