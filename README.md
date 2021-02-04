@@ -1,5 +1,7 @@
 # iudanet_infra
+
 ![github actions linter](https://github.com/Otus-DevOps-2020-11/iudanet_infra/workflows/linter/badge.svg)
+
 ## iudanet Infra repository
 
 ## HW-10
@@ -13,13 +15,13 @@
 * новая структура каталогов в ansible
 * создано окружение для stage и prod
 * dynamic inventory перенесен в окружения
-  * TODO: Добработать скрипт dynamic inventory, для работы с несколькими окружениями, наверно нужен лейбл из переменных терраформа с именем окружения и при запуске скрипта искать переменную env в group_vars ansible, по ней будет происходить фильтрация хостов для инвентори.
+  * TODO: Доработать скрипт dynamic inventory, для работы с несколькими окружениями, наверно нужен лейбл из переменных Terraform с именем окружения и при запуске скрипта искать переменную env в group_vars ansible, по ней будет происходить фильтрация хостов для инвентори.
 * добавлены линтеры в github actions для задания **
   * из-за недоступности секретов на github, не сделал ansible-lint. Ругается на шифрованные переменные.
 
 * Добавлен бейдж статуса линтера
 
-![github actions linter](https://github.com/Otus-DevOps-2020-11/iudanet_infra/workflows/linter/badge.svg)
+  ![github actions linter](https://github.com/Otus-DevOps-2020-11/iudanet_infra/workflows/linter/badge.svg)
 
 ### Тесты
 
