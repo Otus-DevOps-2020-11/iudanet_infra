@@ -1,0 +1,6 @@
+---
+# handlers file for db
+- name: restart mongod
+  systemd:
+    name: mongod
+    state: restarted
