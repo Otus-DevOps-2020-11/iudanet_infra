@@ -17,8 +17,8 @@ jobs:
           repository: express42/otus-homeworks
           path: otus-homeworks
           ref: 2020-11
-      - name: run otus test
-        run: pwd && ls -lah  && ls -lah ./otus-homeworks && env | grep REF && echo ${GITHUB_REF##*/} && cd $GITHUB_WORKSPACE
+      - name: Get versions
+        run: 'echo -=Get versions=-; ansible --version; ansible-lint --version; packer version; terraform version; tflint --version; docker version; docker-compose --version'
       - name: run test otus
         run: cd  $GITHUB_WORKSPACE && ./otus-homeworks/homeworks/${GITHUB_REF##*/}/run.sh
 
@@ -29,6 +29,8 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+      - name: Get versions
+        run: 'echo -=Get versions=-; ansible --version; ansible-lint --version; packer version; terraform version; tflint --version; docker version; docker-compose --version'
       - name: packer validate app
         run: packer validate -var-file=packer/variables.json.example packer/app.json
       - name: packer validate db
@@ -40,6 +42,8 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+      - name: Get versions
+        run: 'echo -=Get versions=-; ansible --version; ansible-lint --version; packer version; terraform version; tflint --version; docker version; docker-compose --version'
       - name: terraform validate stage
         run: cd terraform/stage && terraform init -backend=false && terraform validate -var-file=terraform.tfvars.example
       - name: tflint stage
@@ -55,33 +59,10 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+      - name: Get versions
+        run: 'echo -=Get versions=-; ansible --version; ansible-lint --version; packer version; terraform version; tflint --version; docker version; docker-compose --version'
       - name: ansible lint
         # run: cd ansible && ansible-lint
         run: cd ansible && echo "NO SECRETS =("
         env:
           ANSIBLE_VAULT_PASSWORD: get_secret_please
-        # - name: Build
-      #   run: docker build -t ansible-lint .
-      # - name: Tags
-      #   run: |
-      #     docker tag ansible-lint ${{ github.repository }}:${{ github.sha }}
-      #     docker tag ansible-lint ${{ github.repository }}:latest
-      # - name: check install
-      #   run: |
-      #     docker images
-      #     docker run --rm ${{ github.repository }}:${{ github.sha }} ansible --version
-      #     docker run --rm ${{ github.repository }}:${{ github.sha }} ansible-lint --version
-      #     docker run --rm ${{ github.repository }}:${{ github.sha }} ssh -V
-      #     docker run --rm ${{ github.repository }}:${{ github.sha }} bash --version
-      # - name: Push to Docker Hub
-      #   run: |
-      #     docker push ${{ github.repository }}:${{ github.sha }}
-      #     docker push ${{ github.repository }}:latest
-      # - name: Push to GitHub Packages
-      #   uses: docker/build-push-action@v1
-      #   with:
-      #     username: ${{ github.actor }}
-      #     password: ${{ secrets.DOCKER_GITHUB_TOKEN }}
-      #     registry: ghcr.io
-      #     repository: ${{ github.repository }}
-      #     tag_with_ref: true
