@@ -15,12 +15,10 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-        path: '/srv'
       - name: run otus test
         run: pwd && ls -lah && env | grep REF && echo ${GITHUB_REF##*/} && cd $GITHUB_WORKSPACE
       - name: run test otus
-        run: cd  $GITHUB_WORKSPACE && ./otus-homeworks/homeworks/${GITHUB_REF##*/}/run.sh
-
+        run: cd  $GITHUB_WORKSPACE && /srv/otus-homeworks/homeworks/${GITHUB_REF##*/}/run.sh
 
   lint-packer:
     runs-on: ubuntu-latest
