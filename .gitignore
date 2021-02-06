@@ -9,3 +9,6 @@ trash
 run.sh
 .vscode
 *.retry
+jdauphant.nginx
+vault.key
+

@@ -1,6 +1,199 @@
 # iudanet_infra
 
-iudanet Infra repository
+![github actions linter](https://github.com/Otus-DevOps-2020-11/iudanet_infra/workflows/linter-pr/badge.svg)
+![github actions linter](https://github.com/Otus-DevOps-2020-11/iudanet_infra/workflows/linter-push/badge.svg)
+
+
+## iudanet Infra repository
+
+## HW-10
+
+### Сделано
+
+* создана роль app
+* создана роль db
+* создан плейбук для создания пользователей
+  * параметры пользователей заданы через зашифрованные переменные в ansible vault
+* новая структура каталогов в ansible
+* создано окружение для stage и prod
+* dynamic inventory перенесен в окружения
+  * TODO: Доработать скрипт dynamic inventory, для работы с несколькими окружениями, наверно нужен лейбл из переменных Terraform с именем окружения и при запуске скрипта искать переменную env в group_vars ansible, по ней будет происходить фильтрация хостов для инвентори.
+* добавлены линтеры в github actions для задания **
+  * из-за недоступности секретов на github, не сделал ansible-lint. Ругается на шифрованные переменные.
+
+* Добавлен бейдж статуса линтера
+
+![github actions linter](https://github.com/Otus-DevOps-2020-11/iudanet_infra/workflows/linter-pr/badge.svg)
+![github actions linter](https://github.com/Otus-DevOps-2020-11/iudanet_infra/workflows/linter-push/badge.svg)
+
+### Тесты
+
+```txt
+  ✔  ansible: Run ansible validation
+     ✔  Command: `cd ansible && ansible-galaxy install -r environments/stage/requirements.yml` exit_status should eq 0
+     ✔  Command: `cd ansible && ansible-lint playbooks/site.yml --exclude=roles/jdauphant.nginx` stdout should eq ""
+     ✔  Command: `cd ansible && ansible-lint playbooks/site.yml --exclude=roles/jdauphant.nginx` exit_status should eq 0
+     ✔  Command: `find ansible/playbooks -name "*.yml" -type f -print0 | ANSIBLE_ROLES_PATH=ansible/roles xargs -0 -n1 ansible-playbook --syntax-check` stderr should not match /The error appears to have been/
+     ✔  Command: `find ansible/playbooks -name "*.yml" -type f -print0 | ANSIBLE_ROLES_PATH=ansible/roles xargs -0 -n1 ansible-playbook --syntax-check` exit_status should eq 0
+  ✔  structure: Check repo structure
+     ✔  Directory ansible should exist
+     ✔  Directory ansible/playbooks should exist
+     ✔  Directory ansible/roles should exist
+     ✔  Directory ansible/old should exist
+     ✔  Directory ansible/roles/app should exist
+     ✔  Directory ansible/roles/db should exist
+     ✔  Directory ansible/environments should exist
+     ✔  Directory ansible/environments should exist
+     ✔  Directory ansible/environments/stage should exist
+     ✔  Directory ansible/environments/stage/group_vars should exist
+     ✔  Directory ansible/environments/prod should exist
+     ✔  Directory ansible/environments/prod/group_vars should exist
+     ✔  File .gitignore should exist
+     ✔  File .gitignore content should match /\n\Z/
+     ✔  File README.md should exist
+     ✔  File README.md content should match /\n\Z/
+     ✔  File ansible/requirements.txt should exist
+     ✔  File ansible/requirements.txt content should match /\n\Z/
+     ✔  File ansible/ansible.cfg should exist
+     ✔  File ansible/ansible.cfg content should match /\n\Z/
+     ✔  File ansible/playbooks/packer_app.yml should exist
+     ✔  File ansible/playbooks/packer_app.yml content should match /\n\Z/
+     ✔  File ansible/playbooks/packer_db.yml should exist
+     ✔  File ansible/playbooks/packer_db.yml content should match /\n\Z/
+     ✔  File ansible/playbooks/site.yml should exist
+     ✔  File ansible/playbooks/site.yml content should match /\n\Z/
+     ✔  File ansible/playbooks/users.yml should exist
+     ✔  File ansible/playbooks/users.yml content should match /\n\Z/
+     ✔  File ansible/playbooks/app.yml should exist
+     ✔  File ansible/playbooks/app.yml content should match /\n\Z/
+     ✔  File ansible/playbooks/db.yml should exist
+     ✔  File ansible/playbooks/db.yml content should match /\n\Z/
+     ✔  File ansible/playbooks/deploy.yml should exist
+     ✔  File ansible/playbooks/deploy.yml content should match /\n\Z/
+     ✔  File ansible/environments/stage/requirements.yml should exist
+     ✔  File ansible/environments/stage/requirements.yml content should match /\n\Z/
+     ✔  File ansible/environments/prod/requirements.yml should exist
+     ✔  File ansible/environments/prod/requirements.yml content should match /\n\Z/
+     ✔  File .gitignore content should match /jdauphant.nginx/
+  ✔  packer: Run packer validate
+     ✔  File packer/app.json should exist
+     ✔  File packer/app.json content should match /\n\Z/
+     ✔  File packer/db.json should exist
+     ✔  File packer/db.json content should match /\n\Z/
+     ✔  File packer/variables.json.example should exist
+     ✔  File packer/variables.json.example content should match /\n\Z/
+     ✔  File ansible/playbooks/packer_app.yml should exist
+     ✔  File ansible/playbooks/packer_app.yml content should match /\n\Z/
+     ✔  File ansible/playbooks/packer_db.yml should exist
+     ✔  File ansible/playbooks/packer_db.yml content should match /\n\Z/
+     ✔  Command: `packer validate -var-file=packer/variables.json.example packer/app.json` stdout should eq "Template validated successfully.\n"
+     ✔  Command: `packer validate -var-file=packer/variables.json.example packer/app.json` stderr should eq ""
+     ✔  Command: `packer validate -var-file=packer/variables.json.example packer/app.json` exit_status should eq 0
+     ✔  Command: `packer validate -var-file=packer/variables.json.example packer/db.json` stdout should eq "Template validated successfully.\n"
+     ✔  Command: `packer validate -var-file=packer/variables.json.example packer/db.json` stderr should eq ""
+     ✔  Command: `packer validate -var-file=packer/variables.json.example packer/db.json` exit_status should eq 0
+
+
+Profile Summary: 3 successful controls, 0 control failures, 0 controls skipped
+Test Summary: 60 successful, 0 failures, 0 skipped
+```
+
+## HW-9
+
+* Созданы ansible плейбуки для деплой db  и app
+* модифицирован динамический инвентори. Переменные берутся из лейблов виртуальных машин.
+* сборка packer модифицированная под ansible
+
+```txt
+packer build -var-file=packer/variables.json packer/db.json
+packer build -var-file=packer/variables.json packer/app.json
+
+```
+
+* Для прохождения тестов добавлено
+  * ansible.cfg в корень со статическим инвентори
+  * конфиг packer тестируется от корня, пришлось добавить путь к ключу относительно корня в variables.json.example
+
+```txt
+  ✔  ansible: Run ansible validation
+     ✔  Command: `find ansible ! -name "inventory*.yml" -name "*.yml" -type f -print0 | xargs -0 -n1 ansible-playbook --syntax-check` stderr should not match /The error appears to have been/
+     ✔  Command: `find ansible ! -name "inventory*.yml" -name "*.yml" -type f -print0 | xargs -0 -n1 ansible-playbook --syntax-check` exit_status should eq 0
+  ✔  structure: Check repo structure
+     ✔  Directory ansible should exist
+     ✔  Directory ansible/files should exist
+     ✔  Directory ansible/templates should exist
+     ✔  File .gitignore should exist
+     ✔  File .gitignore content should match /\n\Z/
+     ✔  File README.md should exist
+     ✔  File README.md content should match /\n\Z/
+     ✔  File ansible/requirements.txt should exist
+     ✔  File ansible/requirements.txt content should match /\n\Z/
+     ✔  File ansible/ansible.cfg should exist
+     ✔  File ansible/ansible.cfg content should match /\n\Z/
+     ✔  File ansible/inventory should exist
+     ✔  File ansible/inventory content should match /\n\Z/
+     ✔  File ansible/inventory.yml should exist
+     ✔  File ansible/inventory.yml content should match /\n\Z/
+     ✔  File ansible/clone.yml should exist
+     ✔  File ansible/clone.yml content should match /\n\Z/
+     ✔  File ansible/packer_app.yml should exist
+     ✔  File ansible/packer_app.yml content should match /\n\Z/
+     ✔  File ansible/packer_db.yml should exist
+     ✔  File ansible/packer_db.yml content should match /\n\Z/
+     ✔  File ansible/reddit_app_multiple_plays.yml should exist
+     ✔  File ansible/reddit_app_multiple_plays.yml content should match /\n\Z/
+     ✔  File ansible/reddit_app_one_play.yml should exist
+     ✔  File ansible/reddit_app_one_play.yml content should match /\n\Z/
+     ✔  File ansible/site.yml should exist
+     ✔  File ansible/site.yml content should match /\n\Z/
+     ✔  File ansible/app.yml should exist
+     ✔  File ansible/app.yml content should match /\n\Z/
+     ✔  File ansible/db.yml should exist
+     ✔  File ansible/db.yml content should match /\n\Z/
+     ✔  File ansible/deploy.yml should exist
+     ✔  File ansible/deploy.yml content should match /\n\Z/
+  ✔  packer: Run packer validate
+     ✔  File packer/app.json should exist
+     ✔  File packer/app.json content should match /\n\Z/
+     ✔  File packer/db.json should exist
+     ✔  File packer/db.json content should match /\n\Z/
+     ✔  File packer/variables.json.example should exist
+     ✔  File packer/variables.json.example content should match /\n\Z/
+     ✔  File ansible/packer_app.yml should exist
+     ✔  File ansible/packer_app.yml content should match /\n\Z/
+     ✔  File ansible/packer_db.yml should exist
+     ✔  File ansible/packer_db.yml content should match /\n\Z/
+     ✔  Command: `packer validate -var-file=packer/variables.json.example packer/app.json` stdout should eq "Template validated successfully.\n"
+     ✔  Command: `packer validate -var-file=packer/variables.json.example packer/app.json` stderr should eq ""
+     ✔  Command: `packer validate -var-file=packer/variables.json.example packer/app.json` exit_status should eq 0
+     ✔  Command: `packer validate -var-file=packer/variables.json.example packer/db.json` stdout should eq "Template validated successfully.\n"
+     ✔  Command: `packer validate -var-file=packer/variables.json.example packer/db.json` stderr should eq ""
+     ✔  Command: `packer validate -var-file=packer/variables.json.example packer/db.json` exit_status should eq 0
+
+
+Profile Summary: 3 successful controls, 0 control failures, 0 controls skipped
+Test Summary: 51 successful, 0 failures, 0 skipped
+```
+
+## HW-8
+
+* После выполнения команды удаления папки, запуск плейбука будет в статусе `change` так как Ansible создал папку и склонировал в нее репозиторий.
+
+```txt
+Теперь выполните ansible app -m command -a 'rm -rf~/reddit'  и  проверьте  еще  раз  выполнение  плейбука.
+Чтоизменилось и почему? Добавьте информацию в README.md.
+```
+
+* Написан скрипт Dynamic Inventory
+
+## HW-8
+
+* После выполнения команды удаления папки, запуск плейбука будет в статусе `change` так как Ansible создал папку и склонировал в нее репозиторий.
+
+```txt
+Теперь выполните ansible app -m command -a 'rm -rf~/reddit'  и  проверьте  еще  раз  выполнение  плейбука.
+Чтоизменилось и почему? Добавьте информацию в README.md.
+```
 
 ## HW-9
 

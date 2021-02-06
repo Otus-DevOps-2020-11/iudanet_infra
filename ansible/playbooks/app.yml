@@ -1,0 +1,10 @@
+---
+- name: Configure host
+  hosts: app
+  tags: app-tag
+  become: true
+  roles:
+    - app
+    - name: jdauphant.nginx
+      tags:
+        - skip_ansible_lint

@@ -6,7 +6,6 @@ resource "yandex_compute_instance" "db" {
     ansible_group = "db"
     ansible_name  = "dbserver"
     ansible_group_var_mongo_bind_ip  = "0.0.0.0"
-
   }
 
   resources {
