@@ -2,16 +2,17 @@ resource "yandex_compute_instance" "app" {
   name        = "reddit-app"
   platform_id = "standard-v2"
   labels = {
-    tags          = "reddit-app"
-    ansible_group = "app"
-    ansible_name  = "appserver"
-    ansible_host_var_db_host = var.db_internal_host
+    tags                       = "reddit-app"
+    ansible_group              = "app"
+    ansible_name               = "appserver"
+    ansible_host_var_db_host   = var.db_internal_host
     ansible_group_var_username = "ubuntu"
 
   }
   resources {
-    cores  = 2
-    memory = 2
+    core_fraction = 30
+    cores         = 2
+    memory        = 2
   }
 
   boot_disk {

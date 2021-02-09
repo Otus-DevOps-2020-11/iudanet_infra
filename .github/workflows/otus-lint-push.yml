@@ -1,8 +1,9 @@
 name: linter-push
 on:
   push:
-    branches:
-      - '!main'
+    # branches:
+    #   - '!main'
+
 
 jobs:
   otus-homeworks:

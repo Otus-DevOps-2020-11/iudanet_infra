@@ -1,0 +1,20 @@
+---
+- name: Add unit file for Puma
+  template:
+    src: puma.service.j2
+    dest: /etc/systemd/system/puma.service
+  notify: reload puma
+
+- name: Add config for DB connection
+  template:
+    src: db_config.j2
+    dest: '/home/{{ username }}/db_config'
+    owner: '{{ username }}'
+    group: '{{ username }}'
+  notify: reload puma
+
+- name: enable puma
+  systemd:
+    name: puma
+    enabled: true
+    daemon_reload: true

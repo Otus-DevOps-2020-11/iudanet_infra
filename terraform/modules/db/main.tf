@@ -2,15 +2,16 @@ resource "yandex_compute_instance" "db" {
   name        = "reddit-db"
   platform_id = "standard-v2"
   labels = {
-    tags          = "reddit-db"
-    ansible_group = "db"
-    ansible_name  = "dbserver"
-    ansible_group_var_mongo_bind_ip  = "0.0.0.0"
+    tags                            = "reddit-db"
+    ansible_group                   = "db"
+    ansible_name                    = "dbserver"
+    ansible_group_var_mongo_bind_ip = "0.0.0.0"
   }
 
   resources {
-    cores  = 2
-    memory = 2
+    core_fraction = 30
+    cores         = 2
+    memory        = 2
   }
 
   boot_disk {

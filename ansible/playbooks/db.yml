@@ -3,4 +3,4 @@
   hosts: db
   become: true
   roles:
-    - db
+    - otus_role_db
