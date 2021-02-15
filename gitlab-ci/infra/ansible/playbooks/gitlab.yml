@@ -1,0 +1,8 @@
+---
+- name: install docker
+  hosts: gitlab-ci_group
+  become: true
+  roles:
+    - docker
+    - gitlab
+    - gitlab-runner

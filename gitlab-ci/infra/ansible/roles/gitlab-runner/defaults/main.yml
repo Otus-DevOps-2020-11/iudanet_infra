@@ -1,0 +1,5 @@
+---
+# defaults file for gitlab-runner
+gitlab_api_url: http://84.252.128.33/
+access_token:
+registration_token: mXDDJx8x-xoKnhWX2pFw

@@ -3,8 +3,38 @@
 ![github actions linter](https://github.com/Otus-DevOps-2020-11/iudanet_infra/workflows/linter-pr/badge.svg)
 ![github actions linter](https://github.com/Otus-DevOps-2020-11/iudanet_infra/workflows/linter-push/badge.svg)
 
+## HW-XX
+
+https://devops-team-otus.slack.com/archives/C01G9RFQUTG/p1613306323000500
+
+```bash
+docker exec -it gitlab-runner gitlab-runner register \
+    --url http://gitlab.otus.iudanet.com/ \
+    --non-interactive \
+    --locked=false \
+    --name DockerRunner \
+    --executor docker \
+    --docker-image alpine:latest \
+    --registration-token tocken \
+    --tag-list "linux,xenial,ubuntu,docker" \
+    --run-untagged
+```
 
 ## iudanet Infra repository
+
+## HW-11
+
+### Сделано
+
+* Добавлена возможность использования vagrant для локальной разработки и тестирования ролей
+* настроено тестирование роли с помощью molecule==2.22
+* Добавлен тест Testinfra для ролли db проверяющий открытый порт.
+* Переключена сборка образов в Packer на ansible с ролями
+* Роль db вынесена в отдельный репозиторий по ссылке [https://github.com/iudanet/otus_role_db]
+* Настроен CI для вынесенной роли
+* Настроено оповещения в slaсk о статусе тестов роли
+* Тесты ДЗ проходят в Github Actions
+
 
 ## HW-10
 

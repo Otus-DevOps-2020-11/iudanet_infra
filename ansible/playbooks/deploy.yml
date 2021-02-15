@@ -17,10 +17,10 @@
         repo: 'https://github.com/express42/reddit.git'
         dest: '/home/{{ username }}/reddit'
         version: monolith
-      # notify: reload puma
+      notify: reload puma
 
     - name: Bundle install
       bundler:
         state: present
         chdir: '/home/{{ username }}/reddit'
-      # notify: reload puma
+      notify: reload puma
