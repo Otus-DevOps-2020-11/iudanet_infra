@@ -6,3 +6,4 @@
     - docker
     - gitlab
     - gitlab-runner
+    - traefik2

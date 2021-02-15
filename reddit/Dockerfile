@@ -18,5 +18,5 @@ RUN rm Gemfile.lock \
     && bundle install \
     && chmod 0777 start.sh
 
-
+EXPOSE 9292
 CMD ["/app/start.sh"]
