@@ -9,5 +9,11 @@ resource "cloudflare_record" "gitlab" {
   name    = "gitlab.otus"
   value   = "${yandex_compute_instance.gitlab-ci.network_interface.0.nat_ip_address}"
   type    = "A"
-  ttl     = 3600
+}
+
+resource "cloudflare_record" "review" {
+  zone_id = var.cloudflare_zone_id
+  name    = "*.review.otus"
+  value   = "${yandex_compute_instance.gitlab-ci.network_interface.0.nat_ip_address}"
+  type    = "A"
 }
