@@ -1,0 +1,22 @@
+---
+# tasks file for traefik2
+- name: Create a network
+  community.general.docker_network:
+    name: proxy
+
+- name: start traefik docker
+  community.general.docker_container:
+    name: traefik
+    image: traefik:v2.4.2
+    restart_policy: always
+    state: started
+    labels:
+    command: --api.insecure=true --providers.docker
+    networks:
+      - name: proxy
+    ports:
+      - '81:80'
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock

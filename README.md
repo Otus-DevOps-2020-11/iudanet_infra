@@ -3,6 +3,50 @@
 ![github actions linter](https://github.com/Otus-DevOps-2020-11/iudanet_infra/workflows/linter-pr/badge.svg)
 ![github actions linter](https://github.com/Otus-DevOps-2020-11/iudanet_infra/workflows/linter-push/badge.svg)
 
+## HW-15
+
+### Сделано
+
+* Написан проект terraform для разворачивания инфраструктуры под gitlab
+  * в cloudflare настраивается 2 зоны через terraform на адрес vm с gitlab
+    * gitlab.otus.iudanet.com
+    * *.review.otus.iudanet.com
+* Написана Ansible роль для разворачивания gitlab
+* Написана Ansible роль для разворачивания gitlab-runner
+  * Для регистрации ранера нужно выполнить руками комманду на хосте с установленным ранером.
+
+  ```bash
+  sudo gitlab-runner register \
+    --url http://gitlab.otus.iudanet.com/ \
+    --non-interactive \
+    --locked=false \
+    --name DockerRunner \
+    --executor docker \
+    --docker-image alpine:latest \
+    --registration-token токен \
+    --tag-list "linux,xenial,ubuntu,docker" \
+    --docker-volumes "/var/run/docker.sock:/var/run/docker.sock" \
+    --run-untagged
+  ```
+
+* Написана Ansible роль для разворачивания traefik2
+  * traefik  используется для динамической настройки окружений, адрес окружения берется из лейбла контейнера
+* Настроена интеграция со Slack.
+  * Пример: [https://devops-team-otus.slack.com/archives/C01G9RFQUTG/p1613306323000500]()
+* Написан .gitlab-ci.yml пайплайн для сборки, тестирования и деплоя приложения в разные среды.
+* пример вывода `docker ps`
+
+  ```bash
+  sudo docker ps
+  CONTAINER ID   IMAGE                             COMMAND                  CREATED          STATUS                 PORTS                                                            NAMES
+  a119d8233443   iudanet/otus-rabbit-ci:bd3b0fcf   "/app/start.sh"          16 seconds ago   Up 14 seconds          9292/tcp                                                         review.branch-gitlab-ci-4sx8wm
+  ec910a4bf187   iudanet/otus-rabbit-ci:bd3b0fcf   "/app/start.sh"          33 seconds ago   Up 31 seconds          9292/tcp                                                         dev.gitlab-ci-1.bd3b0fcf
+  bbef5a391f83   iudanet/otus-rabbit-ci:bd3b0fcf   "/app/start.sh"          6 minutes ago    Up 6 minutes           9292/tcp                                                         production.1.1.5.bd3b0fcf
+  0d0a54b3fc22   iudanet/otus-rabbit-ci:bd3b0fcf   "/app/start.sh"          13 minutes ago   Up 13 minutes          9292/tcp                                                         beta.1.1.5.bd3b0fcf
+  ab285a986b12   traefik:v2.4.2                    "/entrypoint.sh --ap…"   2 hours ago      Up 2 hours             0.0.0.0:8080->8080/tcp, 0.0.0.0:81->80/tcp                       traefik
+  5b58e3ba66de   gitlab/gitlab-ce:latest           "/assets/wrapper"        5 hours ago      Up 5 hours (healthy)   0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp, 0.0.0.0:2222->22/tcp   gitlab
+  ```
+
 ## iudanet Infra repository
 
 ## HW-11
